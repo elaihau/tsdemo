@@ -1,0 +1,42 @@
+{
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "lint",
+            "problemMatcher": ["$eslint-stylish"]
+        },
+        {
+            "type": "shell",
+            "label": "build and watch",
+            "cwd": "${workspaceFolder}",
+            "command": "./node_modules/.bin/tsc -w --preserveWatchOutput",
+            "problemMatcher": {
+                "name": "tsc-watch",
+                "label": "tsc watcher matcher",
+                "owner": "typescript",
+                "source": "ts",
+                "applyTo": "closedDocuments",
+                "fileLocation": ["relative"],
+                "pattern":[{
+                    "name": "tsc",
+                    "regexp": "^([^\\s].*)[\\(:](\\d+)[,:](\\d+)(?:\\):\\s+|\\s+-\\s+)(error|warning|info)\\s+TS(\\d+)\\s*:\\s*(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "code": 5,
+                    "message": 6
+                }],
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": {
+                        "regexp": "^\\s*(?:message TS6032:|\\[?\\d{1,2}:\\d{1,2}:\\d{1,2}(?: AM| PM| a\\.m\\.| p\\.m\\.)?(?:\\]| -)) File change detected\\. Starting incremental compilation\\.\\.\\."
+                    },
+                    "endsPattern": {
+                        "regexp": "^\\s*(?:message TS6042:|\\[?\\d{1,2}:\\d{1,2}:\\d{1,2}(?: AM| PM| a\\.m\\.| p\\.m\\.)?(?:\\]| -)) (?:Compilation complete\\.|Found \\d+ errors?\\.)"
+                    }
+                }
+            }
+        }
+    ]
+}
